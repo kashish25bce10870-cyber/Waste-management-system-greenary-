@@ -1,0 +1,11 @@
+Step 1: User drops waste into the bin or scans using app.
+Step 2: System reads input or AI model identifies type of waste.
+Step 3: If biodegradable → send to compartment A
+        If recyclable → send to compartment B
+        If non-biodegradable → send to compartment C
+Step 4: Measure bin level using sensors.
+Step 5: If bin level ≥ 90% → send alert to waste collection authority.
+Step 6: Update database with collected waste statistics.
+Step 7: If user disposed correctly → increase eco-points.
+Step 8: Display status on dashboard.
+Step 9: Repeat for next waste input.
