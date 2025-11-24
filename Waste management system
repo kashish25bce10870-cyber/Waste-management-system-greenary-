@@ -1,0 +1,90 @@
+import datetime
+
+class Waste:
+    def _init_(self, waste_type, weight):
+        self.waste_type = waste_type
+        self.weight = weight
+        self.date = datetime.datetime.now()
+
+    def _str_(self):
+        return f"{self.date.strftime('%Y-%m-%d %H:%M')} | {self.waste_type:<20} | {self.weight} kg"
+
+
+class WasteManagementSystem:
+    def _init_(self):
+        self.records = []
+
+    def add_waste(self):
+        print("\nEnter Waste Details:")
+        waste_type = input("Enter waste type (Biodegradable / Recyclable / Non-biodegradable): ")
+        weight = float(input("Enter weight in kg: "))
+        self.records.append(Waste(waste_type, weight))
+        print("\n✔ Waste added successfully!")
+
+    def view_records(self):
+        if not self.records:
+            print("\n⚠ No waste records available.")
+            return
+
+        print("\n📌 Waste Log Records")
+        print("-------------------------------------------------------------")
+        print("Date & Time           | Waste Type           | Weight")
+        print("-------------------------------------------------------------")
+        for record in self.records:
+            print(record)
+        print("-------------------------------------------------------------")
+
+    def calculate_statistics(self):
+        if not self.records:
+            print("\n⚠ No data to calculate statistics.")
+            return
+
+        total = sum(w.weight for w in self.records)
+        bio = sum(w.weight for w in self.records if w.waste_type.lower() == "biodegradable")
+        rec = sum(w.weight for w in self.records if w.waste_type.lower() == "recyclable")
+        non = sum(w.weight for w in self.records if w.waste_type.lower() == "non-biodegradable")
+
+        print("\n📊 Statistics Report")
+        print(f"Total Waste Collected: {total} kg")
+        print(f"Biodegradable Waste  : {bio} kg")
+        print(f"Recyclable Waste     : {rec} kg")
+        print(f"Non-biodegradable    : {non} kg")
+
+    def save_to_file(self):
+        if not self.records:
+            print("\n⚠ No records to save.")
+            return
+
+        with open("waste_record.txt", "w") as f:
+            for record in self.records:
+                f.write(str(record) + "\n")
+        print("\n💾 Data saved to file: waste_record.txt")
+
+    def menu(self):
+        while True:
+            print("\n========= SMART WASTE MANAGEMENT SYSTEM =========")
+            print("1. Add Waste Data")
+            print("2. View Waste Records")
+            print("3. View Statistics")
+            print("4. Save Data to File")
+            print("5. Exit")
+            choice = input("\nEnter your choice (1–5): ")
+
+            if choice == '1':
+                self.add_waste()
+            elif choice == '2':
+                self.view_records()
+            elif choice == '3':
+                self.calculate_statistics()
+            elif choice == '4':
+                self.save_to_file()
+            elif choice == '5':
+                print("\nThank you for using the system! ♻")
+                break
+            else:
+                print("\n❌ Invalid choice. Try again!")
+
+
+if _name_ == "_main_":
+    system = WasteManagementSystem()
+    system.menu()
